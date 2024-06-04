@@ -1,4 +1,4 @@
-package com.hsenid.first_app.Model;
+package com.hsenid.first_app.model;
 
 // Import the necessary classes and annotations
 import lombok.*;
@@ -9,11 +9,6 @@ import java.time.LocalDate;
 
 // Lombok's annotation to mark this class as a MongoDB document
 @Document
-// Lombok annotation to generate getter methods for all fields
-@Getter
-// Lombok's annotation to generate setter methods for all fields
-@Setter
-// Lombok's annotation to generate standard methods such as toString(), equals(), and hashCode()
 @Data
 // Lombok's annotation to generate a no-argument constructor
 @NoArgsConstructor
