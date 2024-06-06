@@ -2,9 +2,10 @@ package com.hsenid.first_app.controllers;
 
 import com.hsenid.first_app.dto.request.StudentRequest;
 import com.hsenid.first_app.dto.response.StudentResponse;
-import com.hsenid.first_app.services.StudentService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import com.hsenid.first_app.Model.Student;
+import com.hsenid.first_app.Services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,14 +20,10 @@ import java.util.List;
 @RequestMapping("/students")
 public class StudentController {
 
-    // Service layer dependency for handling business logic
-    private final StudentService studentService;
 
-    // Constructor with dependency injection
+    // Service layer dependency for handling business logic
     @Autowired
-    public StudentController(StudentService studentService) {
-        this.studentService = studentService;
-    }
+    private StudentService studentService;
 
     // Endpoint to retrieve the list of all students
     @GetMapping
