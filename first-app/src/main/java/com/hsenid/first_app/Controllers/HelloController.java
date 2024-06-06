@@ -1,4 +1,4 @@
-package com.hsenid.first_app.Controllers;
+package com.hsenid.first_app.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

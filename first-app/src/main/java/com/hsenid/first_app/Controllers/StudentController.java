@@ -1,18 +1,23 @@
-package com.hsenid.first_app.Controllers;
+package com.hsenid.first_app.controllers;
 
-import com.hsenid.first_app.Model.Student;
-import com.hsenid.first_app.Services.StudentService;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.hsenid.first_app.dto.request.StudentRequest;
+import com.hsenid.first_app.dto.response.StudentResponse;
+import com.hsenid.first_app.model.Student;
+import com.hsenid.first_app.services.StudentService;
+
+import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-// Annotation to mark this class as a RESTful web service controller
+// Annotation to mark this class as a RESTFUL web service controller
 @RestController
+// Adding the logger slf4j
+@Slf4j
 // Base URL for all endpoints in this controller
 @RequestMapping("/students")
 public class StudentController {
@@ -24,25 +29,31 @@ public class StudentController {
 
     // Endpoint to retrieve the list of all students
     @GetMapping
-    public List<Student> studentList() {
-        return studentService.getAllStudents();
+    public ResponseEntity <List<StudentResponse>> studentList() {
+        log.trace("Students are listed!");
+        return ResponseEntity.ok( studentService.getAllStudents());
     }
 
     // Endpoint to retrieve a student by their ID
     @GetMapping("/{id}")
-    public Student getStudent(@PathVariable String id) {
-        return studentService.getStudentById(id);
+    public ResponseEntity <StudentResponse> getStudent(@PathVariable String id) {
+        log.trace("Student corresponding to {} is found!", id);
+        return ResponseEntity.ok(studentService.getStudentById(id));
     }
 
     // New endpoint to create a student
     @PostMapping("/addStudent")
-    public void addStudent(@RequestBody Student student) {
-        studentService.addStudent(student);
+    public ResponseEntity<String> addStudent(@RequestBody @Valid StudentRequest studentRequest) {
+        studentService.addStudent(studentRequest);
+        log.trace("Student added successfully!");
+        return ResponseEntity.ok("Student added successfully!");
     }
 
     // Endpoint to remove a student by their ID
     @DeleteMapping("/removeStudent/{id}")
-    public void removeStudent(@PathVariable String id) {
+    public ResponseEntity<String> removeStudent(@PathVariable String id) {
         studentService.removeStudent(id);
+        log.trace("Student removed successfully!");
+        return ResponseEntity.ok("Student removed successfully!");
     }
 }

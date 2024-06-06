@@ -1,6 +1,6 @@
-package com.hsenid.first_app.Repositories;
+package com.hsenid.first_app.repositories;
 
-import com.hsenid.first_app.Model.Student;
+import com.hsenid.first_app.model.Student;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 /**
