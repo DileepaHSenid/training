@@ -2,10 +2,12 @@ package com.hsenid.first_app.controllers;
 
 import com.hsenid.first_app.dto.request.StudentRequest;
 import com.hsenid.first_app.dto.response.StudentResponse;
+import com.hsenid.first_app.model.Student;
+import com.hsenid.first_app.services.StudentService;
+
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import com.hsenid.first_app.Model.Student;
-import com.hsenid.first_app.Services.StudentService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

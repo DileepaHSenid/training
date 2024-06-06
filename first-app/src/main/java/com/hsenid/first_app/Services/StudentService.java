@@ -50,18 +50,14 @@ public class StudentService {
      * @throws ApiRequestException if the student with the given ID is not found.
      */
     public StudentResponse getStudentById(String id) {
-        // Retrieve the student from the repository by their ID
-        Optional<Student> studentOptional = studentRepo.findById(id);
-
-        // Check if the student is present in the optional
-        if (studentOptional.isEmpty()) {
-            // Throw an exception if the student is not found
-            throw new ApiRequestException("Student with ID " + id + " not found");
-        }
-
+        // Retrieve the student from the repository by their ID and throw an exception if not found
+        Student student = studentRepo.findById(id)
+                                     .orElseThrow(() -> new ApiRequestException("Student with ID " + id + " not found"));
+    
         // Convert the student entity to a StudentResponse DTO and return it
-        return StudentMapper.studentToDTO(studentOptional.get());
+        return StudentMapper.studentToDTO(student);
     }
+     
 
     /**
      * Method to add a new student
@@ -81,16 +77,12 @@ public class StudentService {
      * @param id the ID of the student to be removed
      */
     public void removeStudent(String id) {
-        // Retrieve the student from the repository by their ID
-        Optional<Student> studentOptional = studentRepo.findById(id);
-
-        // Check if the student is present in the optional
-        if (studentOptional.isEmpty()) {
-            // Throw an exception if the student is not found
-            throw new ApiRequestException("Student with ID " + id + " not found to be removed!");
-        }
-
+        // Retrieve the student from the repository by their ID and throw an exception if not found
+        Student student = studentRepo.findById(id)
+                                     .orElseThrow(() -> new ApiRequestException("Student with ID " + id + " not found to be removed!"));
+    
         // Remove the student by their ID
         studentRepo.deleteById(id);
     }
+    
 }

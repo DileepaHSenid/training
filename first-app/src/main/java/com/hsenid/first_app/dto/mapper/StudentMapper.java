@@ -18,11 +18,8 @@ public class StudentMapper {
     public static StudentResponse studentToDTO(Student student) {
         // Create a new instance of StudentResponse
         // Set the ID and the name of the StudentResponse from the Student object
-        StudentResponse studentResponse;
-        studentResponse = new StudentResponse(student.getId(), student.getName());
+        return new StudentResponse(student.getId(), student.getName());
 
-        // Return the populated StudentResponse object
-        return studentResponse;
     }
 
     /**
@@ -32,11 +29,7 @@ public class StudentMapper {
      * @return the converted Student object.
      */
     public static Student dtoToStudent(StudentRequest studentRequest) {
-       Student student = new Student();
-       student.setId(studentRequest.id());
-       student.setName(studentRequest.name());
-       student.setDateOfBirth(studentRequest.dob());
-       student.setAverage(studentRequest.average());
-       return student;
+        return new Student(studentRequest.id(), studentRequest.name(), studentRequest.dob(), studentRequest.average());
     }
+     
 }
