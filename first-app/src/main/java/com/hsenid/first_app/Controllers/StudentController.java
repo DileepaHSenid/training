@@ -2,30 +2,25 @@ package com.hsenid.first_app.Controllers;
 
 import com.hsenid.first_app.Model.Student;
 import com.hsenid.first_app.Services.StudentService;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-// Lombok annotations to generate getter and setter methods
-@Getter
-@Setter
 // Annotation to mark this class as a RESTful web service controller
 @RestController
 // Base URL for all endpoints in this controller
 @RequestMapping("/students")
 public class StudentController {
 
-    // Service layer dependency for handling business logic
-    private final StudentService studentService;
 
-    // Constructor with dependency injection
+    // Service layer dependency for handling business logic
     @Autowired
-    public StudentController(StudentService studentService) {
-        this.studentService = studentService;
-    }
+    private StudentService studentService;
 
     // Endpoint to retrieve the list of all students
     @GetMapping

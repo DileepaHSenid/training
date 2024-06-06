@@ -8,8 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-// Lombok's annotation to generate getter methods for fields in this class
-@Getter
 // Spring annotation to indicate that this class is a service component
 @Service
 public class StudentService {
