@@ -15,21 +15,24 @@ import java.util.List;
 public class Users implements UserDetails {
 
     @Id
-    private String id;
-    private String email;
-    private String password;
-    private String role;
+    private String id;            // Unique identifier for the user
+    private String email;         // User's email address
+    private String password;      // User's password (should be encoded)
+    private String role;          // User's role, e.g., ADMIN, USER
 
+    // Define user authorities based on the role
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role));
     }
 
+    // Return the user's username, which is the email in this case
     @Override
     public String getUsername() {
         return email;
     }
 
+    // Account status checks
     @Override
     public boolean isAccountNonExpired() {
         return true;

@@ -27,22 +27,27 @@ public class AuthService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    // Handles user registration
     public ReqRes signUp(ReqRes registrationRequest) {
         ReqRes reqRes = new ReqRes();
         try {
+            // Check if the email is already registered
             if (userRepository.findByEmail(registrationRequest.getEmail()).isPresent()) {
                 reqRes.setStatusCode(400);
                 reqRes.setMessage("Email is already in use");
                 return reqRes;
             }
 
+            // Create a new user object and set its properties
             Users user = new Users();
             user.setEmail(registrationRequest.getEmail());
             user.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
             user.setRole(registrationRequest.getRole());
 
+            // Save the user to the database
             Users savedUser = userRepository.save(user);
 
+            // Check if the user was saved successfully
             if (savedUser != null && savedUser.getId() != null) {
                 reqRes.setUsers(savedUser);
                 reqRes.setMessage("User has been registered successfully");
@@ -59,6 +64,7 @@ public class AuthService {
         return reqRes;
     }
 
+    // Handles user login
     public ReqRes signIn(ReqRes signInRequest) {
         ReqRes reqRes = new ReqRes();
         try {
@@ -66,7 +72,7 @@ public class AuthService {
             String password = signInRequest.getPassword();
 
             // Check if the user exists in the database
-            Optional <Users> userOptional = userRepository.findByEmail(email);
+            Optional<Users> userOptional = userRepository.findByEmail(email);
             if (userOptional.isEmpty()) {
                 reqRes.setStatusCode(401);
                 reqRes.setError("Invalid email");
@@ -82,9 +88,10 @@ public class AuthService {
                 return reqRes;
             }
 
-            // If credentials are valid, proceed with authentication and token generation
+            // Authenticate the user credentials
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
 
+            // Generate JWT and refresh token
             String jwt = jwtUtils.generateToken(user);
             String refreshToken = jwtUtils.generateRefreshToken(new HashMap<>(), user);
 
@@ -101,12 +108,14 @@ public class AuthService {
         return reqRes;
     }
 
+    // Handles token refresh
     public ReqRes refreshToken(ReqRes refreshTokenRequest) {
         ReqRes reqRes = new ReqRes();
         try {
             String email = jwtUtils.extractUsername(refreshTokenRequest.getToken());
             Users user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
 
+            // Validate the refresh token
             if (jwtUtils.isTokenValid(refreshTokenRequest.getToken(), user)) {
                 String newJwt = jwtUtils.generateToken(user);
 
